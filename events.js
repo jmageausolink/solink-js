@@ -1,38 +1,16 @@
 var fetch = require('node-fetch'),
-	path = require('./path'),
+	querystring = require('querystring'),
 	URL = require('url'),
-	querystring = require('querystring')
-
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
-  }
-}
-
-function parseJSON(response) {
-  return response.json()
-}
-
-function returnJSON(json) {
-  return json
-}
+	path = require('./path'),
+	helper = require('./helper')
 
 function EventsEndpoint(ctx) {
 	this.ctx = ctx
 }
 
-function handleError(e) {
-	console.log('err', e)
-}
-
 var _find = function(params) {
-
 	var apiContext = this.ctx,
-		url = path.eventsUrl(apiContext.host),
+		url = _eventsUrl(apiContext.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -40,7 +18,7 @@ var _find = function(params) {
 
 	if (typeof params === 'string')
 		url = URL.resolve(url, params)
-	else if(typeof params === 'object') {
+	else {
 		url = URL.resolve(url, '?' + querystring.stringify(params))
 	}
 
@@ -51,16 +29,15 @@ var _find = function(params) {
 		options.headers.Authorization = 
 			"Bearer " + apiContext.token
 		return fetch(url, options)
-			.then(checkStatus)
-			.then(parseJSON)
-			.then(returnJSON)
-			.catch(handleError)
+			.then(_checkStatus)
+			.then(_parseJSON)
+			.catch(_handleError)
 	})
 }
 
 var _create = function(event) {
 	var apiContext = this.ctx,
-		url = path.eventsUrl(apiContext.host),
+		url = _eventsUrl(apiContext.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
@@ -75,9 +52,8 @@ var _create = function(event) {
 			"Bearer " + apiContext.token
 
 		return fetch(url, options)
-			.then(function (response) {
-				return response.headers.get('link')			
-			}).catch(handleError)
+			.then(function (res) { return res.headers.get('link') })
+			.catch(_handleError)
 	})
 }
 

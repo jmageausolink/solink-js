@@ -1,6 +1,7 @@
 var fetch = require('node-fetch'),
+	URL = require('url'),
 	path = require('./path'),
-	URL = require('url')
+	helper = require('./helper')
 
 function AuthEndpoint(ctx) {
 	this.ctx = ctx
@@ -10,7 +11,7 @@ var _login = function(credentials) {
 	var apiContext = this.ctx;
 	apiContext.credentials = credentials || apiContext.credentials
 
-	var url = URL.resolve(path.authUrl(apiContext.host), 'login'),
+	var url = URL.resolve(_authUrl(apiContext.host), 'login'),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
@@ -18,13 +19,11 @@ var _login = function(credentials) {
 		}
 
 	return fetch(url, options)
-		.then(function(response) {
-			return response.json()
-		}).then(function(json) {
-	 	 	apiContext.token = json.auth_token
-		}).catch(function(e) {
-	    	console.log('JSON parsing failed', e)
-	  	})
+		.then(_checkStatus)
+		.then(_parseJSON)
+		.then(function(json) { apiContext.token = json.auth_token })
+		.catch(_handleError)
+
 }
 
 AuthEndpoint.prototype = {
