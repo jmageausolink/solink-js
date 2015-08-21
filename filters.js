@@ -4,6 +4,7 @@ var fetch = require('node-fetch'),
 
 var find = function() {
 	var url = path.filtersUrl(this.ctx.host)
+	
 		fetch(url)
 		  .then(function(response) {
 			return response.json()
@@ -12,7 +13,7 @@ var find = function() {
 		  }).catch(function(ex) {
 		    console.log('parsing failed', ex)
 		  })
-	}
+}
 
 function FiltersEndpoint(ctx) {
 	this.ctx = ctx
