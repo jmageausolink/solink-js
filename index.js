@@ -1,9 +1,9 @@
 var	EventsEndpoint = require('./events'),
 	FiltersEndpoint = require('./filters'),
 	AuthEndpoint = require('./auth')
+	UsersEndpoint = require('./users')
 	// ConfigurationsEndpoint = require('./configurations')
 	// LocationsEndpoint = require('./locations')
-	// UsersEndpoint = require('./users')
 	
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0" 
@@ -16,8 +16,9 @@ function SolinkAPI(credentials, host) {
 	this.auth = new AuthEndpoint(this)
 	this.events = new EventsEndpoint(this)
 	this.filters = new FiltersEndpoint(this)
+	this.users = new UsersEndpoint(this)
+	// this.locations = new LocationsEndpoint(this)
 	// this.configurations = new ConfigurationsEndpoint(this)
-	// this.users = new UsersEndpoint(this)
 }
 
 module.exports = SolinkAPI

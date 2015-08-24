@@ -4,17 +4,17 @@ var fetch = require('node-fetch'),
 	path = require('./path'),
 	helper = require('./helper')
 
-function FiltersEndpoint(ctx) {
+function UsersEndpoint (ctx) {
 	this.ctx = ctx
 }
 
-var _create = function(filter) {
+var _create = function(user) {
 	var apiContext = this.ctx,
-		url = _filtersEndPtUrl(apiContext.host),
+		url = _usersEndPtUrl(apiContext.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
-			body: JSON.stringify(filter)
+			body: JSON.stringify(user)
 		}
 
 	if(apiContext.token == '')
@@ -23,7 +23,6 @@ var _create = function(filter) {
 	return login.then(function () {
 		options.headers.Authorization = 
 			"Bearer " + apiContext.token
-
 		return fetch(url, options)
 			.then(_checkStatus)
 			.then(_parseJSON)
@@ -33,7 +32,7 @@ var _create = function(filter) {
 
 var _find = function(params) {
 	var apiContext = this.ctx,
-		url = _filtersEndPtUrl(apiContext.host),
+		url = _usersEndPtUrl(apiContext.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -50,7 +49,6 @@ var _find = function(params) {
 		return login.then(function () {
 			options.headers.Authorization = 
 				"Bearer " + apiContext.token
-
 			return fetch(url, options)
 				.then(_checkStatus)
 				.then(_parseJSON)
@@ -58,32 +56,9 @@ var _find = function(params) {
 		})
 }
 
-var _update = function(id, filter) {
-	var apiContext = this.ctx,
-		url = URL.resolve(_filtersEndPtUrl(apiContext.host), id),
-		options = { 
-			method: 'PUT', 
-			headers: { 'content-type': 'application/json'},
-			body: JSON.stringify(filter)
-		}
-
-	if(apiContext.token == '')
-		login = apiContext.auth.login()
-
-	return login.then(function () {
-		options.headers.Authorization = 
-			"Bearer " + apiContext.token
-
-		return fetch(url, options)
-			.then(_checkStatus)
-			.then(_parseJSON)
-			.catch(_handleError)
-	})
-}
-
 var _delete = function(id) {
 	var apiContext = this.ctx,
-		url = URL.resolve(_filtersEndPtUrl(apiContext.host), id),
+		url = URL.resolve(_usersEndPtUrl(apiContext.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}
@@ -101,12 +76,10 @@ var _delete = function(id) {
 			.catch(_handleError)
 	})
 }
-
-FiltersEndpoint.prototype = {
+UsersEndpoint.prototype = {
 	create: _create,
 	find: _find,
-	update: _update,
 	delete: _delete
 };
 
-module.exports = FiltersEndpoint
+module.exports = UsersEndpoint
