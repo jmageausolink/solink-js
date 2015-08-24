@@ -11,7 +11,7 @@ var _login = function(credentials) {
 	var apiContext = this.ctx;
 	apiContext.credentials = credentials || apiContext.credentials
 
-	var url = URL.resolve(_authUrl(apiContext.host), 'login'),
+	var url = URL.resolve(_authEndPtUrl(apiContext.host), 'login'),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},

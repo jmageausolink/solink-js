@@ -1,25 +1,25 @@
 var URL = require('url')
 
-global._authUrl = function(host) {
+global._authEndPtUrl = function(host) {
 	return URL.resolve(host, 'auth/')
 }
 
-global._configurationsUrl = function(host) {
+global._configurationsEndPtUrl = function(host) {
 	return URL.resolve(host, 'configurations/')
 }
 
-global._eventsUrl = function(host) {
+global._eventsEndPtUrl = function(host) {
 	return URL.resolve(host, 'events/')
 }
 
-global._filtersUrl = function(host) {
+global._filtersEndPtUrl = function(host) {
 	return URL.resolve(host, 'filters/')
 }
 
-global._locationsUrl = function(host) {
+global._locationsEndPtUrl = function(host) {
 	return URL.resolve(host, 'locations/')
 }
 
-global._usersUrl = function(host) {
+global._usersEndPtUrl = function(host) {
 	return URL.resolve(host, 'users/')
 }

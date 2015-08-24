@@ -14,9 +14,9 @@ function SolinkAPI(credentials, host) {
 	this.token = ''	
 
 	this.auth = new AuthEndpoint(this)
-	// this.configurations = new ConfigurationsEndpoint(this)
 	this.events = new EventsEndpoint(this)
 	this.filters = new FiltersEndpoint(this)
+	// this.configurations = new ConfigurationsEndpoint(this)
 	// this.users = new UsersEndpoint(this)
 }
 

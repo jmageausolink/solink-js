@@ -10,7 +10,7 @@ function EventsEndpoint(ctx) {
 
 var _find = function(params) {
 	var apiContext = this.ctx,
-		url = _eventsUrl(apiContext.host),
+		url = _eventsEndPtUrl(apiContext.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -37,7 +37,7 @@ var _find = function(params) {
 
 var _create = function(event) {
 	var apiContext = this.ctx,
-		url = _eventsUrl(apiContext.host),
+		url = _eventsEndPtUrl(apiContext.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
