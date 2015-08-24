@@ -13,5 +13,7 @@ global._parseJSON = function(response) {
 }
 
 global._handleError = function(e) {
-	console.log('err', e)
+	var error = new Error(e.statusText)
+    error.response = e
+    throw error
 }
