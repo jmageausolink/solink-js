@@ -76,6 +76,7 @@ var _delete = function(id) {
 			.catch(_handleError)
 	})
 }
+
 UsersEndpoint.prototype = {
 	create: _create,
 	find: _find,

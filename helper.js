@@ -2,11 +2,11 @@ global._checkStatus = function(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    // var error = new Error(response.statusText)
-    // error.response = response
-    console.log('bad status')
-    console.log(JSON.stringify(response, null, 2))
-    return response
+    var error = new Error(response.statusText),
+        buffer = new Buffer(response.body._readableState.buffer[0])
+    error.response = response
+    error.response.body = JSON.parse(buffer.toString('utf-8'))
+    throw error
   }
 }
 
