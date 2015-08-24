@@ -50,11 +50,11 @@ var _create = function(filter) {
 	})
 }
 
-var _update = function(filter) {
+var _update = function(id, filter) {
 	var apiContext = this.ctx,
-		url = _filtersEndPtUrl(apiContext.host),
+		url = URL.resolve(_filtersEndPtUrl(apiContext.host), id),
 		options = { 
-			method: 'POST', 
+			method: 'PUT', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(filter)
 		}
