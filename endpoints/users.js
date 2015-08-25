@@ -1,8 +1,8 @@
 var fetch = require('node-fetch'),
 	querystring = require('querystring'),
 	URL = require('url'),
-	path = require('./path'),
-	helper = require('./helper')
+	path = require('./common/path'),
+	helper = require('./common/response-handlers')
 
 function UsersEndpoint (ctx) {
 	this.ctx = ctx

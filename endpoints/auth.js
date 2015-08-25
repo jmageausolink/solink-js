@@ -1,7 +1,7 @@
 var fetch = require('node-fetch'),
 	URL = require('url'),
-	path = require('./path'),
-	helper = require('./helper')
+	path = require('./common/path'),
+	helper = require('./common/response-handlers')
 
 function AuthEndpoint(ctx) {
 	this.ctx = ctx
@@ -26,7 +26,6 @@ var _login = function(credentials) {
 			return json
 		})
 		.catch(_handleError)
-
 }
 
 var _setPassword = function (credentials) {
