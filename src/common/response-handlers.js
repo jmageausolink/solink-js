@@ -1,4 +1,4 @@
-global._checkStatus = function(response) {
+var _checkStatus = function(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
@@ -10,10 +10,16 @@ global._checkStatus = function(response) {
   }
 }
 
-global._parseJSON = function(response) {
+var _parseJSON = function(response) {
   return response.json()
 }
 
-global._handleError = function(err) {
+var _handleError = function(err) {
     throw err
+}
+
+module.exports = {
+  checkStatus: _checkStatus,
+  parseJSON: _parseJSON,
+  handleError: _handleError
 }

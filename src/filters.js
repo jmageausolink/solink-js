@@ -1,14 +1,17 @@
 var querystring = require('querystring'),
 	URL = require('url'),
-	path = require('./common/path'),
 	sendRequest = require('./common/send-request')
 
 function FiltersEndpoint(ctx) {
 	this.ctx = ctx
 }
 
+var filtersUrl = function(host) {
+	return URL.resolve(host, 'filters/')
+}
+
 var _create = function(filter) {
-	var url = _filtersEndPtUrl(this.ctx.host),
+	var url = filtersUrl(this.ctx.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
@@ -19,7 +22,7 @@ var _create = function(filter) {
 }
 
 var _find = function(params) {
-	var url = _filtersEndPtUrl(this.ctx.host),
+	var url = filtersUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -35,7 +38,7 @@ var _find = function(params) {
 }
 
 var _update = function(id, filter) {
-	var url = URL.resolve(_filtersEndPtUrl(this.ctx.host), id),
+	var url = URL.resolve(filtersUrl(this.ctx.host), id),
 		options = { 
 			method: 'PUT', 
 			headers: { 'content-type': 'application/json'},
@@ -46,7 +49,7 @@ var _update = function(id, filter) {
 }
 
 var _delete = function(id) {
-	var url = URL.resolve(_filtersEndPtUrl(this.ctx.host), id),
+	var url = URL.resolve(filtersUrl(this.ctx.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}

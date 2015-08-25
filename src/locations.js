@@ -1,6 +1,5 @@
 var querystring = require('querystring'),
 	URL = require('url'),
-	path = require('./common/path'),
 	helper = require('./common/response-handlers'),
 	_cameras = require('./objects/cameras')
 
@@ -8,8 +7,12 @@ function LocationsEndpoint(ctx) {
 	this.ctx = ctx
 }
 
+var locationsUrl = function(host) {
+	return URL.resolve(host, 'locations/')
+}
+
 var _find = function(params) {
-	var url = _locationsEndPtUrl(this.ctx.host),
+	var url = locationsUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -23,7 +26,7 @@ var _find = function(params) {
 }
 
 var _tree = function(orgPath, depth) {
-	var url = _locationsEndPtUrl(this.ctx.host),
+	var url = locationsUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},

@@ -1,7 +1,6 @@
 var querystring = require('querystring'),
 	URL = require('url'),
 	sendRequest = require('../common/send-request')
-	path = require('../common/path')
 
 function Camera(location, params) {
 	this.location = location

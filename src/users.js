@@ -1,13 +1,17 @@
 var querystring = require('querystring'),
-	URL = require('url'),
-	path = require('./common/path')
+	URL = require('url')
 
 function UsersEndpoint (ctx) {
 	this.ctx = ctx
 }
 
+var usersUrl = function(host) {
+	return URL.resolve(host, 'users/')
+}
+
 var _create = function(user) {
-	var options = { 
+	var url = usersUrl(this.ctx.host),
+		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(user)
@@ -17,7 +21,7 @@ var _create = function(user) {
 }
 
 var _find = function(params) {
-	var url = _usersEndPtUrl(this.ctx.host),
+	var url = usersUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -33,7 +37,7 @@ var _find = function(params) {
 }
 
 var _delete = function(id) {
-	var url = URL.resolve(_usersEndPtUrl(this.ctx.host), id),
+	var url = URL.resolve(usersUrl(this.ctx.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}

@@ -1,14 +1,17 @@
 var querystring = require('querystring'),
 	URL = require('url'),
-	path = require('./common/path'),
 	sendRequest = require('./common/send-request')
 
 function EventsEndpoint(ctx) {
 	this.ctx = ctx
 }
 
+var eventsUrl = function(host) {
+	return URL.resolve(host, 'events/')
+}
+
 var _find = function(params) {
-	var url = _eventsEndPtUrl(this.ctx.host),
+	var url = eventsUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -24,7 +27,7 @@ var _find = function(params) {
 }
 
 var _create = function(ev) {
-	var url = _eventsEndPtUrl(this.ctx.host),
+	var url = eventsUrl(this.ctx.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
@@ -35,7 +38,7 @@ var _create = function(ev) {
 }
 
 var _histogram = function(params) {
-	var url = URL.resolve(_eventsEndPtUrl(this.ctx.host), 'histogram'),
+	var url = URL.resolve(eventsUrl(this.ctx.host), 'histogram'),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
