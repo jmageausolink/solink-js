@@ -1,17 +1,11 @@
-var fetch = require('node-fetch'),
-	querystring = require('querystring'),
+var querystring = require('querystring'),
 	URL = require('url'),
 	sendRequest = require('../common/send-request')
-	path = require('../common/path'),
-	helper = require('../common/response-handlers')
+	path = require('../common/path')
 
 function Camera(location, params) {
 	this.location = location
 	this.params = params
-}
-
-var _cameras = function (params) {
-	return new Camera(this, params)
 }
 
 var _at = function (nvr_id) {
@@ -21,18 +15,21 @@ var _at = function (nvr_id) {
 			headers: { 'content-type': 'application/json'},
 		}
 
-		url = URL.resolve(url, nvr_id + '/cameras/')
+	url = URL.resolve(url, nvr_id + '/cameras/')
 
-	if (typeof this.params === 'string')
+	if (typeof this.params === 'string') {
 		url = URL.resolve(url, this.params)
-	else 
+	} else {
 		url = URL.resolve(url, '?' + querystring.stringify(this.params))		
-
+	}
+	
 	return sendRequest(this.location.ctx, url, options)
 }
 
 Camera.prototype = {
 	at: _at
-};
+}
 
-module.exports = _cameras
+module.exports = function (params) {
+	return new Camera(this, params)
+}

@@ -1,8 +1,6 @@
-var fetch = require('node-fetch'),
-	querystring = require('querystring'),
+var querystring = require('querystring'),
 	URL = require('url'),
 	path = require('./common/path'),
-	helper = require('./common/response-handlers'),
 	sendRequest = require('./common/send-request')
 
 function EventsEndpoint(ctx) {
@@ -16,10 +14,11 @@ var _find = function(params) {
 			headers: { 'content-type': 'application/json'},
 		}
 
-	if (typeof params === 'string')
+	if (typeof params === 'string') {
 		url = URL.resolve(url, params)
-	else 
+	} else {
 		url = URL.resolve(url, '?' + querystring.stringify(params))	
+	}
 
 	return sendRequest(this.ctx, url, options)
 }
@@ -42,7 +41,7 @@ var _histogram = function(params) {
 			headers: { 'content-type': 'application/json'},
 		}
 
-		url = URL.resolve(url, '?' + querystring.stringify(params))
+	url = URL.resolve(url, '?' + querystring.stringify(params))
 
 	return sendRequest(this.ctx, url, options)
 }

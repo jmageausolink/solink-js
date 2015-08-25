@@ -2,8 +2,9 @@ var fetch = require('node-fetch'),
 	helper = require('./response-handlers')
 
 function sendRequest (apiContext, url, options) {
-	if(apiContext.token == '')
+	if(apiContext.token == '') {
 		login = apiContext.auth.login()
+	}
 
 	return login.then(function() {
 			options.headers.Authorization = 

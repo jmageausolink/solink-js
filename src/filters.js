@@ -1,9 +1,7 @@
-var fetch = require('node-fetch'),
-	querystring = require('querystring'),
+var querystring = require('querystring'),
 	URL = require('url'),
-	sendRequest = require('./common/send-request'),
 	path = require('./common/path'),
-	helper = require('./common/response-handlers')
+	sendRequest = require('./common/send-request')
 
 function FiltersEndpoint(ctx) {
 	this.ctx = ctx
@@ -27,10 +25,11 @@ var _find = function(params) {
 			headers: { 'content-type': 'application/json'},
 		}
 
-	if (typeof params === 'string')
+	if (typeof params === 'string') {
 		url = URL.resolve(url, params)
-	else 
+	} else {
 		url = URL.resolve(url, '?' + querystring.stringify(params))	
+	}
 
 	return sendRequest(this.ctx, url, options)
 }

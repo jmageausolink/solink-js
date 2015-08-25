@@ -1,9 +1,8 @@
-var fetch = require('node-fetch'),
-	querystring = require('querystring'),
+var querystring = require('querystring'),
 	URL = require('url'),
-	_cameras = require('./objects/cameras'),
 	path = require('./common/path'),
-	helper = require('./common/response-handlers')
+	helper = require('./common/response-handlers'),
+	_cameras = require('./objects/cameras')
 
 function LocationsEndpoint(ctx) {
 	this.ctx = ctx
@@ -16,8 +15,9 @@ var _find = function(params) {
 			headers: { 'content-type': 'application/json'},
 		}
 
-	if (params)
+	if (params) {
 		url = URL.resolve(url, params)
+	}
 
 	return sendRequest(this.ctx, url, options)
 }
@@ -31,8 +31,9 @@ var _tree = function(orgPath, depth) {
 		
 	url = URL.resolve(url, 'tree/' + orgPath)
 
-	if(typeof depth !== 'undefined')
+	if(typeof depth !== 'undefined') {
 		url = URL.resolve(url, '?depth=' + depth)
+	}
 
 	return sendRequest(this.ctx, url, options)		
 }
