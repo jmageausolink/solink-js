@@ -15,5 +15,5 @@ global._parseJSON = function(response) {
 }
 
 global._handleError = function(err) {
-    throw err 
+    throw err
 }
