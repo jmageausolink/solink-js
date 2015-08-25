@@ -10,56 +10,31 @@ function LocationsEndpoint(ctx) {
 }
 
 var _find = function(params) {
-	var apiContext = this.ctx,
-		url = _locationsEndPtUrl(apiContext.host),
+	var url = _locationsEndPtUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
 		}
 
-		if (params)
-			url = URL.resolve(url, params)	
-	
-		if(apiContext.token == '')
-			login = apiContext.auth.login()
+	if (params)
+		url = URL.resolve(url, params)
 
-		console.log(url)
-		return login.then(function () {
-			options.headers.Authorization = 
-				"Bearer " + apiContext.token
-			return fetch(url, options)
-				.then(_checkStatus)
-				.then(_parseJSON)
-				.catch(_handleError)
-		})
+	return sendRequest(this.ctx, url, options)
 }
 
 var _tree = function(orgPath, depth) {
-	var apiContext = this.ctx,
-		url = _locationsEndPtUrl(apiContext.host),
+	var url = _locationsEndPtUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
 		}
 		
-		url = URL.resolve(url, 'tree/' + orgPath)
+	url = URL.resolve(url, 'tree/' + orgPath)
 
-		if(typeof depth !== 'undefined')
-			url = URL.resolve(url, '?depth=' + depth)
-	
-		if(apiContext.token == '')
-			login = apiContext.auth.login()
+	if(typeof depth !== 'undefined')
+		url = URL.resolve(url, '?depth=' + depth)
 
-		console.log(url)
-
-		return login.then(function () {
-			options.headers.Authorization = 
-				"Bearer " + apiContext.token
-			return fetch(url, options)
-				.then(_checkStatus)
-				.then(_parseJSON)
-				.catch(_handleError) 
-		})
+	return sendRequest(this.ctx, url, options)		
 }
 
 LocationsEndpoint.prototype = {

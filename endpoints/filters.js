@@ -1,6 +1,7 @@
 var fetch = require('node-fetch'),
 	querystring = require('querystring'),
 	URL = require('url'),
+	sendRequest = require('./common/send-request'),
 	path = require('./common/path'),
 	helper = require('./common/response-handlers')
 
@@ -9,97 +10,50 @@ function FiltersEndpoint(ctx) {
 }
 
 var _create = function(filter) {
-	var apiContext = this.ctx,
-		url = _filtersEndPtUrl(apiContext.host),
+	var url = _filtersEndPtUrl(this.ctx.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(filter)
 		}
 
-	if(apiContext.token == '')
-		login = apiContext.auth.login()
-
-	return login.then(function () {
-		options.headers.Authorization = 
-			"Bearer " + apiContext.token
-
-		return fetch(url, options)
-			.then(_checkStatus)
-			.then(_parseJSON)
-			.catch(_handleError)
-	})
+	return sendRequest(this.ctx, url, options)
 }
 
 var _find = function(params) {
-	var apiContext = this.ctx,
-		url = _filtersEndPtUrl(apiContext.host),
+	var url = _filtersEndPtUrl(this.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
 		}
 
-		if (typeof params === 'string')
-			url = URL.resolve(url, params)
-		else 
-			url = URL.resolve(url, '?' + querystring.stringify(params))		
-	
-		if(apiContext.token == '')
-			login = apiContext.auth.login()
+	if (typeof params === 'string')
+		url = URL.resolve(url, params)
+	else 
+		url = URL.resolve(url, '?' + querystring.stringify(params))	
 
-		return login.then(function () {
-			options.headers.Authorization = 
-				"Bearer " + apiContext.token
-
-			return fetch(url, options)
-				.then(_checkStatus)
-				.then(_parseJSON)
-				.catch(_handleError)
-		})
+	return sendRequest(this.ctx, url, options)
 }
 
 var _update = function(id, filter) {
-	var apiContext = this.ctx,
-		url = URL.resolve(_filtersEndPtUrl(apiContext.host), id),
+	var url = URL.resolve(_filtersEndPtUrl(this.ctx.host), id),
 		options = { 
 			method: 'PUT', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(filter)
 		}
 
-	if(apiContext.token == '')
-		login = apiContext.auth.login()
-
-	return login.then(function () {
-		options.headers.Authorization = 
-			"Bearer " + apiContext.token
-
-		return fetch(url, options)
-			.then(_checkStatus)
-			.then(_parseJSON)
-			.catch(_handleError)
-	})
+	return sendRequest(this.ctx, url, options)
 }
 
 var _delete = function(id) {
-	var apiContext = this.ctx,
-		url = URL.resolve(_filtersEndPtUrl(apiContext.host), id),
+	var url = URL.resolve(_filtersEndPtUrl(this.ctx.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}
 		}
 
-	if(apiContext.token == '') 
-		login = apiContext.auth.login()
-
-	return login.then(function () {
-		options.headers.Authorization = 
-			"Bearer " + apiContext.token
-
-		return fetch(url, options)
-			.then(_checkStatus)
-			.catch(_handleError)
-	})
+	return sendRequest(this.ctx, url, options)
 }
 
 FiltersEndpoint.prototype = {

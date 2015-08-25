@@ -1,6 +1,7 @@
 var fetch = require('node-fetch'),
 	querystring = require('querystring'),
 	URL = require('url'),
+	sendRequest = require('../common/send-request')
 	path = require('../common/path'),
 	helper = require('../common/response-handlers')
 
@@ -14,8 +15,7 @@ var _cameras = function (params) {
 }
 
 var _at = function (nvr_id) {
-	var apiContext = this.location.ctx,
-		url = _locationsEndPtUrl(apiContext.host),
+	var url = _locationsEndPtUrl(this.location.ctx.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -23,22 +23,12 @@ var _at = function (nvr_id) {
 
 		url = URL.resolve(url, nvr_id + '/cameras/')
 
-		if (typeof this.params === 'string')
-			url = URL.resolve(url, this.params)
-		else 
-			url = URL.resolve(url, '?' + querystring.stringify(this.params))		
-	
-		if(apiContext.token == '')
-			login = apiContext.auth.login()
+	if (typeof this.params === 'string')
+		url = URL.resolve(url, this.params)
+	else 
+		url = URL.resolve(url, '?' + querystring.stringify(this.params))		
 
-		return login.then(function () {
-			options.headers.Authorization = 
-				"Bearer " + apiContext.token
-			return fetch(url, options)
-				.then(_checkStatus)
-				.then(_parseJSON)
-				.catch(_handleError)
-		})
+	return sendRequest(this.location.ctx, url, options)
 }
 
 Camera.prototype = {

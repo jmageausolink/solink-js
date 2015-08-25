@@ -8,30 +8,27 @@ function AuthEndpoint(ctx) {
 }
 
 var _login = function(credentials) {
-	var apiContext = this.ctx;
-	apiContext.credentials = credentials || apiContext.credentials
+	this.ctx.credentials = credentials || this.ctx.credentials
 
-	var url = URL.resolve(_authEndPtUrl(apiContext.host), 'login'),
+	var url = URL.resolve(_authEndPtUrl(this.ctx.host), 'login'),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
-			body: JSON.stringify(apiContext.credentials)
+			body: JSON.stringify(this.ctx.credentials)
 		}
 
 	return fetch(url, options)
 		.then(_checkStatus)
 		.then(_parseJSON)
 		.then(function(json) { 
-			apiContext.token = json.auth_token 
+			this.ctx.token = json.auth_token 
 			return json
 		})
 		.catch(_handleError)
 }
 
 var _setPassword = function (credentials) {
-	var apiContext = this.ctx;
-
-	var url = URL.resolve(_authEndPtUrl(apiContext.host), 'setpassword'),
+	var url = URL.resolve(_authEndPtUrl(this.ctx.host), 'setpassword'),
 		options = { 
 			method: 'PUT', 
 			headers: { 'content-type': 'application/json'},
