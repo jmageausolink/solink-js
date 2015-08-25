@@ -1,8 +1,8 @@
-var	EventsEndpoint = require('./endpoints/events'),
-	FiltersEndpoint = require('./endpoints/filters'),
-	AuthEndpoint = require('./endpoints/auth')
-	UsersEndpoint = require('./endpoints/users')
-	LocationsEndpoint = require('./endpoints/locations')	
+var	EventsEndpoint = require('./src/events'),
+	FiltersEndpoint = require('./src/filters'),
+	AuthEndpoint = require('./src/auth')
+	UsersEndpoint = require('./src/users')
+	LocationsEndpoint = require('./src/locations')	
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0" 
 
