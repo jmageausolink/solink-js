@@ -5,7 +5,14 @@ Node npm module to serve as an intermediary client for all calls to the Solink A
 ```JavaScript
 var SolinkAPI = require('solink-js'),
     url = 'http://localhost:8800' || 'https://api.solinkcloud.com',
-    token = 'Bearer thisisabearertoken',
+    token = {
+        "auth_token": "thisisthetoken",
+          "aws": {
+            "accessKeyId": "ACCESSKEYID",
+            "secretAccessKey": "secret/Acce/ssKey",
+            "sessionToken": "session+Token"
+          }
+        },
     credentials = { 
     	'email' : 'irfanisawesome@email.com', 
     	'password' : 'password'
