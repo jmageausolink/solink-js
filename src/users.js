@@ -1,27 +1,24 @@
 var querystring = require('querystring'),
-	URL = require('url')
-
-function UsersEndpoint (ctx) {
-	this.ctx = ctx
-}
+	URL = require('url'),
+	sendRequest = require('./common/send-request')
 
 var usersUrl = function(host) {
 	return URL.resolve(host, 'users/')
 }
 
 var _create = function(user) {
-	var url = usersUrl(this.ctx.host),
+	var url = usersUrl(this.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(user)
 		}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _find = function(params) {
-	var url = usersUrl(this.ctx.host),
+	var url = usersUrl(this.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -33,37 +30,23 @@ var _find = function(params) {
 		url = URL.resolve(url, '?' + querystring.stringify(params))		
 	}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _delete = function(id) {
-	var url = URL.resolve(usersUrl(this.ctx.host), id),
+	var url = URL.resolve(usersUrl(this.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}
 		}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
-UsersEndpoint.prototype = {
-	create: _create,
-	find: _find,
-	delete: _delete
+module.exports = function(connection) {
+	return {
+		create: _create.bind(connection),
+		find: _find.bind(connection),
+		delete: _delete.bind(connection)
+	}
 };
-
-var Singleton = (function () {
-    var instance;
- 
-    function createInstance(ctx) {
-        return new UsersEndpoint(ctx)
-    }
- 
-    return {
-        getInstance: function (ctx) {
-            return instance || ( instance = createInstance(ctx) )
-        }
-    };
-})()
-
-module.exports = Singleton.getInstance

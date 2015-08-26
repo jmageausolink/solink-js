@@ -2,27 +2,23 @@ var querystring = require('querystring'),
 	URL = require('url'),
 	sendRequest = require('./common/send-request')
 
-function FiltersEndpoint(ctx) {
-	this.ctx = ctx
-}
-
 var filtersUrl = function(host) {
 	return URL.resolve(host, 'filters/')
 }
 
 var _create = function(filter) {
-	var url = filtersUrl(this.ctx.host),
+	var url = filtersUrl(this.host),
 		options = { 
 			method: 'POST', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(filter)
 		}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _find = function(params) {
-	var url = filtersUrl(this.ctx.host),
+	var url = filtersUrl(this.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -34,49 +30,35 @@ var _find = function(params) {
 		url = URL.resolve(url, '?' + querystring.stringify(params))	
 	}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _update = function(id, filter) {
-	var url = URL.resolve(filtersUrl(this.ctx.host), id),
+	var url = URL.resolve(filtersUrl(this.host), id),
 		options = { 
 			method: 'PUT', 
 			headers: { 'content-type': 'application/json'},
 			body: JSON.stringify(filter)
 		}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _delete = function(id) {
-	var url = URL.resolve(filtersUrl(this.ctx.host), id),
+	var url = URL.resolve(filtersUrl(this.host), id),
 		options = { 
 			method: 'delete',
 			headers: {}
 		}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
-FiltersEndpoint.prototype = {
-	create: _create,
-	find: _find,
-	update: _update,
-	delete: _delete
+module.exports = function(connection) {
+	return {
+		create: _create.bind(connection),
+		find: _find.bind(connection),
+		update: _update.bind(connection),
+		delete: _delete.bind(connection)		
+	}
 };
-
-var Singleton = (function () {
-    var instance;
- 
-    function createInstance(ctx) {
-        return new FiltersEndpoint(ctx)
-    }
- 
-    return {
-        getInstance: function (ctx) {
-            return instance || ( instance = createInstance(ctx) )
-        }
-    };
-})()
-
-module.exports = Singleton.getInstance

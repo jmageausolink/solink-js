@@ -1,13 +1,7 @@
-var	EventsEndpoint = require('./src/events'),
-	FiltersEndpoint = require('./src/filters'),
-	AuthEndpoint = require('./src/auth')
-	UsersEndpoint = require('./src/users')
-	LocationsEndpoint = require('./src/locations')	
-
 // Remove this once we get a certificate
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0" 
 
-function SolinkAPI(params, host) {
+function Connection(params, host, root) {
 	if (typeof params === 'string') {
 		this.token = params
 	} else {
@@ -15,11 +9,16 @@ function SolinkAPI(params, host) {
 		this.token = ''	
 	}
 	this.host = host || 'https://api.solinkcloud.com'
-	this.auth = require('./src/auth')(this)
-	this.events = require('./src/events')(this)
-	this.filters = require('./src/filters')(this)
-	this.users = require('./src/users')(this)
-	this.locations = require('./src/locations')(this)
+	this.root = root
+}
+
+function SolinkAPI(params, host) {
+	var connection = new Connection(params, host, this)
+	this.auth = require('./src/auth')(connection)
+	this.filters = require('./src/filters')(connection)
+	this.events = require('./src/events')(connection)
+	this.users = require('./src/users')(connection)
+	this.locations = require('./src/locations')(connection)
 }
 
 module.exports = SolinkAPI

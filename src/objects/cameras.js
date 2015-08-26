@@ -7,8 +7,12 @@ function Camera(location, params) {
 	this.params = params
 }
 
+var locationsUrl = function(host) {
+	return URL.resolve(host, 'locations/')
+}
+
 var _at = function (nvr_id) {
-	var url = _locationsEndPtUrl(this.location.ctx.host),
+	var url = locationsUrl(this.location.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -22,7 +26,7 @@ var _at = function (nvr_id) {
 		url = URL.resolve(url, '?' + querystring.stringify(this.params))		
 	}
 	
-	return sendRequest(this.location.ctx, url, options)
+	return sendRequest(this.location, url, options)
 }
 
 Camera.prototype = {

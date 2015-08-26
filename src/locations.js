@@ -1,18 +1,15 @@
 var querystring = require('querystring'),
 	URL = require('url'),
 	helper = require('./common/response-handlers'),
-	_cameras = require('./objects/cameras')
-
-function LocationsEndpoint(ctx) {
-	this.ctx = ctx
-}
+	_cameras = require('./objects/cameras'),
+	sendRequest = require('./common/send-request')
 
 var locationsUrl = function(host) {
 	return URL.resolve(host, 'locations/')
 }
 
 var _find = function(params) {
-	var url = locationsUrl(this.ctx.host),
+	var url = locationsUrl(this.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -22,11 +19,11 @@ var _find = function(params) {
 		url = URL.resolve(url, params)
 	}
 
-	return sendRequest(this.ctx, url, options)
+	return sendRequest(this, url, options)
 }
 
 var _tree = function(orgPath, depth) {
-	var url = locationsUrl(this.ctx.host),
+	var url = locationsUrl(this.host),
 		options = { 
 			method: 'GET', 
 			headers: { 'content-type': 'application/json'},
@@ -38,27 +35,13 @@ var _tree = function(orgPath, depth) {
 		url = URL.resolve(url, '?depth=' + depth)
 	}
 
-	return sendRequest(this.ctx, url, options)		
+	return sendRequest(this, url, options)		
 }
 
-LocationsEndpoint.prototype = {
-	find: _find,
-	tree: _tree,
-	cameras: _cameras
+module.exports = function(connection) {
+	return {
+		find: _find.bind(connection),
+		tree: _tree.bind(connection),
+		cameras: _cameras.bind(connection)
+	}
 };
-
-var Singleton = (function () {
-    var instance;
- 
-    function createInstance(ctx) {
-        return new LocationsEndpoint(ctx)
-    }
- 
-    return {
-        getInstance: function (ctx) {
-            return instance || ( instance = createInstance(ctx) )
-        }
-    };
-})()
-
-module.exports = Singleton.getInstance

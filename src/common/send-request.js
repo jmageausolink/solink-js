@@ -1,27 +1,27 @@
 var fetch = require('node-fetch'),
 	helper = require('./response-handlers')
 
-function sendRequest (apiContext, url, options) {
-	var login = Promise
+function sendRequest (connection, url, options) {
+	// var login = Promise
 
-	if(apiContext.token == '') {
-		login = apiContext.auth.login()
+	if(connection.token == '' || true) {
+		login = connection.root.auth.login()
 
-		return login.then(function() {
-				options.headers.Authorization = 
-					'Bearer ' + apiContext.token
-				return fetch(url, options)
-					.then(helper.checkStatus)
-					.then(helper.parseJSON)
-					.catch(helper.handleError)
-			})
+	return login.then(function() {
+			options.headers.Authorization = 
+				'Bearer ' + connection.token
+			return fetch(url, options)
+				.then(helper.checkStatus)
+				.then(helper.parseJSON)
+				.catch(helper.handleError)
+		})
 	} else {
 		options.headers.Authorization = 
-					'Bearer ' + apiContext.token
-				return fetch(url, options)
-					.then(helper.checkStatus)
-					.then(helper.parseJSON)
-					.catch(helper.handleError)
+					'Bearer ' + connection.token
+		return fetch(url, options)
+			.then(helper.checkStatus)
+			.then(helper.parseJSON)
+			.catch(helper.handleError)
 	}
 }
 
