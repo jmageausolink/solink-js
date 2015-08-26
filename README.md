@@ -61,7 +61,7 @@ locations.
     cameras({offset: 0, count: 1}).at(nvr_id)
 
 images.
-	get('image_path.png')
+	get('image_path.png') // fetches image url in S3 bucket
 ```
 
 Each function defined above returns a promise, error-handling is left upto the user, functions can therefore be chained/nested:
