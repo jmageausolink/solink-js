@@ -1,6 +1,11 @@
 # Solink API client
 Node npm module to serve as an intermediary client for all calls to the Solink API
 
+### Installation
+```Bash
+npm install solink-js --save
+```
+
 ### Instantiation
 ```JavaScript
 var SolinkAPI = require('solink-js'),
