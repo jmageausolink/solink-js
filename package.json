@@ -1,5 +1,5 @@
 {
-  "name": "solink-api-client",
+  "name": "solink-js",
   "version": "1.0.0",
   "description": "intermediary client for all HTTP requests to solink cloud hosted api",
   "main": "index.js",
