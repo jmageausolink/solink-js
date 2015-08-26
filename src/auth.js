@@ -1,5 +1,6 @@
 var fetch = require('node-fetch'),
 	URL = require('url'),
+	jwtDecode = require('jwt-decode'),
 	helper = require('./common/response-handlers')
 
 var authUrl = function(host) {
@@ -20,7 +21,8 @@ var _login = function(credentials) {
 		.then(helper.checkStatus)
 		.then(helper.parseJSON)
 		.then(function(json) {
-			self.token = json
+			self.token = json			 
+			self.tenantId = jwtDecode(json.auth_token).app_metadata.tenant_id
 			return json
 		})
 		.catch(helper.handleError)

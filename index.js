@@ -10,6 +10,7 @@ function Connection(params, host, root) {
 	}
 	this.host = host || 'https://api.solinkcloud.com'
 	this.root = root
+	this.tenantId = ''
 }
 
 function SolinkAPI(params, host) {
@@ -19,6 +20,7 @@ function SolinkAPI(params, host) {
 	this.events = require('./src/events')(connection)
 	this.users = require('./src/users')(connection)
 	this.locations = require('./src/locations')(connection)
+	this.images = require('./src/images')(connection)
 }
 
 module.exports = SolinkAPI
