@@ -8,20 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/irfansharif/solink-api-client.git"
+    "url": "git+https://github.com/SolinkCorp/solink-js.git"
   },
   "keywords": [
     "solink",
     "cloud",
     "api",
-    "client"
+    "client",
+    "platform"
   ],
-  "author": "Irfan Sharif",
+  "author": "Rohit Dudani",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/irfansharif/solink-api-client/issues"
+    "url": "https://github.com/SolinkCorp/solink-js/issues"
   },
-  "homepage": "https://github.com/irfansharif/solink-api-client#readme",
+  "homepage": "https://github.com/SolinkCorp/solink-js#readme",
   "dependencies": {
     "aws-sdk": "^2.1.47",
     "jwt-decode": "^1.4.0",

@@ -8,7 +8,7 @@ var _get = function(imgPath) {
 
 	var self = this
 	return login.then(function() {
-		var s3 = new AWS.S3(self.aws);
+		var s3 = new AWS.S3(self.token.aws);
 		var img_url = s3.getSignedUrl('getObject', {
 		  Bucket: "solinkimages",
 		  Key:    self.tenantId + '/' + imgPath 
