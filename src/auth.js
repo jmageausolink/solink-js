@@ -20,7 +20,7 @@ var _login = function(credentials) {
 		.then(helper.checkStatus)
 		.then(helper.parseJSON)
 		.then(function(json) {
-			self.token = json.auth_token
+			self.token = json
 			return json
 		})
 		.catch(helper.handleError)

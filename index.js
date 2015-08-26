@@ -2,11 +2,11 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0" 
 
 function Connection(params, host, root) {
-	if (typeof params === 'string') {
+	if (params.hasOwnProperty('auth_token') && params.hasOwnProperty('aws')) {
 		this.token = params
-	} else {
+	} else if (params.hasOwnProperty('email') && params.hasOwnProperty('password')) {
 		this.credentials = params
-		this.token = ''	
+		this.token = {}
 	}
 	this.host = host || 'https://api.solinkcloud.com'
 	this.root = root
