@@ -65,4 +65,18 @@ FiltersEndpoint.prototype = {
 	delete: _delete
 };
 
-module.exports = FiltersEndpoint
+var Singleton = (function () {
+    var instance;
+ 
+    function createInstance(ctx) {
+        return new FiltersEndpoint(ctx)
+    }
+ 
+    return {
+        getInstance: function (ctx) {
+            return instance || ( instance = createInstance(ctx) )
+        }
+    };
+})()
+
+module.exports = Singleton.getInstance

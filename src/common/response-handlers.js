@@ -11,7 +11,9 @@ var _checkStatus = function(response) {
 }
 
 var _parseJSON = function(response) {
-  return response.json()
+    if(response.status === 204 && response.statusText === "No Content")
+        return response
+    return response.json()
 }
 
 var _handleError = function(err) {

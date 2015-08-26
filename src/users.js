@@ -52,4 +52,18 @@ UsersEndpoint.prototype = {
 	delete: _delete
 };
 
-module.exports = UsersEndpoint
+var Singleton = (function () {
+    var instance;
+ 
+    function createInstance(ctx) {
+        return new UsersEndpoint(ctx)
+    }
+ 
+    return {
+        getInstance: function (ctx) {
+            return instance || ( instance = createInstance(ctx) )
+        }
+    };
+})()
+
+module.exports = Singleton.getInstance

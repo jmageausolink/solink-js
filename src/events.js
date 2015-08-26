@@ -55,4 +55,18 @@ EventsEndpoint.prototype = {
 	histogram: _histogram
 };
 
-module.exports = EventsEndpoint
+var Singleton = (function () {
+    var instance;
+ 
+    function createInstance(ctx) {
+        return new EventsEndpoint(ctx)
+    }
+ 
+    return {
+        getInstance: function (ctx) {
+            return instance || ( instance = createInstance(ctx) )
+        }
+    };
+})()
+
+module.exports = Singleton.getInstance

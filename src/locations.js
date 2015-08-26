@@ -47,4 +47,18 @@ LocationsEndpoint.prototype = {
 	cameras: _cameras
 };
 
-module.exports = LocationsEndpoint
+var Singleton = (function () {
+    var instance;
+ 
+    function createInstance(ctx) {
+        return new LocationsEndpoint(ctx)
+    }
+ 
+    return {
+        getInstance: function (ctx) {
+            return instance || ( instance = createInstance(ctx) )
+        }
+    };
+})()
+
+module.exports = Singleton.getInstance

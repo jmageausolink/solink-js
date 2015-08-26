@@ -49,4 +49,18 @@ AuthEndpoint.prototype = {
 	setPassword: _setPassword
 }
 
-module.exports = AuthEndpoint
+var Singleton = (function () {
+    var instance;
+ 
+    function createInstance(ctx) {
+        return new AuthEndpoint(ctx)
+    }
+ 
+    return {
+        getInstance: function (ctx) {
+            return instance || ( instance = createInstance(ctx) )
+        }
+    };
+})()
+
+module.exports = Singleton.getInstance

@@ -15,11 +15,11 @@ function SolinkAPI(params, host) {
 		this.token = ''	
 	}
 	this.host = host || 'https://api.solinkcloud.com'
-	this.auth = new AuthEndpoint(this)
-	this.events = new EventsEndpoint(this)
-	this.filters = new FiltersEndpoint(this)
-	this.users = new UsersEndpoint(this)
-	this.locations = new LocationsEndpoint(this)
+	this.auth = require('./src/auth')(this)
+	this.events = require('./src/events')(this)
+	this.filters = require('./src/filters')(this)
+	this.users = require('./src/users')(this)
+	this.locations = require('./src/locations')(this)
 }
 
 module.exports = SolinkAPI
