@@ -59,6 +59,9 @@ locations.
     tree(orgPath, depth) // orgpath format: 'Canada/Ontario/Kanata', depth: int
     cameras(camera_id).at(nvr_id)
     cameras({offset: 0, count: 1}).at(nvr_id)
+
+images.
+	get('image_path.png')
 ```
 
 Each function defined above returns a promise, error-handling is left upto the user, functions can therefore be chained/nested:
