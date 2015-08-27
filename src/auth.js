@@ -25,7 +25,6 @@ var _login = function(credentials) {
 			self.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId
 			return json
 		})
-		.catch(helper.handleError)
 }
 
 var _setPassword = function (credentials) {
@@ -39,7 +38,6 @@ var _setPassword = function (credentials) {
 	return fetch(url, options)
 		.then(helper.checkStatus)
 		.then(helper.parseJSON)
-		.catch(helper.handleError)
 }
 
 module.exports = function(connection) {

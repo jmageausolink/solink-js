@@ -80,17 +80,24 @@ Each function defined above returns a promise, error-handling is left upto the u
 
 ```JavaScript
 api.filters.create(filter)
-	.then(function(res) {   console.log('created')  })
+	.then(function(res) { console.log('created') })
 	.then(function() {
 		api.filters.find(filter.id)
-			.then(function(res) {   console.log('found')    })
+			.then(function(res) { console.log('found') })
 			.then(function() {
 				api.filters.update(filter.id, filter)
-					.then(function(res) {   console.log('updated')  })
+					.then(function(res) { console.log('updated') })
 					.then(function() {
 						api.filters.delete(filter.id)
-							.then(function() {  console.log('deleted')  })
+							.then(function() { console.log('deleted') })
 					})
 			})
 	})
 ```
+
+Each promise will propogate any error if thrown from the platform. This can be caught and addressed as follows:
+
+```JavaScript
+api.users.create(user)
+    .then(function(res) {  } )
+    .catch(function(err) { console.log('err, do something') } )

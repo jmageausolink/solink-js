@@ -15,7 +15,6 @@ function sendRequest (connection, url, options, skip) {
 			.then(function (res) {
 				helper.parseJSON(res, skip)
 			})
-			.catch(helper.handleError)
 	})
 }
 

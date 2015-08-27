@@ -1,6 +1,5 @@
 var querystring = require('querystring'),
 	URL = require('url'),
-	helper = require('./common/response-handlers'),
 	sendRequest = require('./common/send-request')
 
 var locationsUrl = function(host) {

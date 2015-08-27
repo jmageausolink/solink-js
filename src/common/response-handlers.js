@@ -16,12 +16,7 @@ var _parseJSON = function(response, skip) {
     return response.json()
 }
 
-var _handleError = function(err) {
-    throw err
-}
-
 module.exports = {
   checkStatus: _checkStatus,
-  parseJSON: _parseJSON,
-  handleError: _handleError
+  parseJSON: _parseJSON
 }
