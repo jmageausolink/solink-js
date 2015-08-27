@@ -31,6 +31,10 @@ var _create = function(ev) {
 		}
 
 	return sendRequest(this, url, options, true)
+			.then(function(res) {
+				var buffer = new Buffer(res.body._readableState.buffer[0])
+				return JSON.parse(buffer.toString('utf-8'))
+			})
 }
 
 var _histogram = function(params) {
