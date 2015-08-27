@@ -1,7 +1,6 @@
 var querystring = require('querystring'),
 	URL = require('url'),
 	helper = require('./common/response-handlers'),
-	// _cameras = require('./objects/cameras'),
 	sendRequest = require('./common/send-request')
 
 var locationsUrl = function(host) {
@@ -39,7 +38,7 @@ var _tree = function(orgPath, depth) {
 }
 
 var _cameras = function (params) {
-	return require('./objects/cameras')(this, params)
+	return require('./extensions/cameras')(this, params)
 }
 
 module.exports = function(connection) {

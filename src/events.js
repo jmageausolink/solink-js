@@ -30,7 +30,7 @@ var _create = function(ev) {
 			body: JSON.stringify(ev)
 		}
 
-	return sendRequest(this, url, options)
+	return sendRequest(this, url, options, true)
 }
 
 var _histogram = function(params) {

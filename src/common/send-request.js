@@ -1,7 +1,7 @@
 var fetch = require('node-fetch'),
 	helper = require('./response-handlers')
 
-function sendRequest (connection, url, options) {
+function sendRequest (connection, url, options, skip) {
 	if (Object.keys(connection.token).length === 0)
 		login = connection.root.auth.login()
 	else 
@@ -12,7 +12,9 @@ function sendRequest (connection, url, options) {
 			'Bearer ' + connection.token.auth_token
 		return fetch(url, options)
 			.then(helper.checkStatus)
-			.then(helper.parseJSON)
+			.then(function (res) {
+				helper.parseJSON(res, skip)
+			})
 			.catch(helper.handleError)
 	})
 }

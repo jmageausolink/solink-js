@@ -1,6 +1,3 @@
-// Remove this once we get a certificate
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0" 
-
 function Connection(params, host, root) {
 	if (params.hasOwnProperty('auth_token') && params.hasOwnProperty('aws')) {
 		this.token = params

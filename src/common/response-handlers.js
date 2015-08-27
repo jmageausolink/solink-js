@@ -10,9 +10,9 @@ var _checkStatus = function(response) {
   }
 }
 
-var _parseJSON = function(response) {
-    if(response.status === 204 && response.statusText === "No Content")
-        return response
+var _parseJSON = function(response, skip) {
+    if(skip) 
+      return response    
     return response.json()
 }
 

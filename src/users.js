@@ -40,7 +40,7 @@ var _delete = function(id) {
 			headers: {}
 		}
 
-	return sendRequest(this, url, options)
+	return sendRequest(this, url, options, true)
 }
 
 module.exports = function(connection) {
