@@ -11,7 +11,7 @@ function sendRequest (connection, url, options, skip) {
 
 	return login.then(function() {
 		options.headers.Authorization = 
-			'Bearer ' + connection.token.auth_token
+			'Bearer ' + connection.token.authToken
 		return fetch(url, options)
 			.then(helper.checkStatus)
 			.then(function (res) {

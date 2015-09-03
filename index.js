@@ -1,5 +1,5 @@
 function Connection(params, host, root) {
-	if (params.hasOwnProperty('auth_token') && params.hasOwnProperty('aws')) {
+	if (params.hasOwnProperty('authToken') && params.hasOwnProperty('aws')) {
 		this.token = params
 	} else if (params.hasOwnProperty('email') && params.hasOwnProperty('password')) {
 		this.credentials = params

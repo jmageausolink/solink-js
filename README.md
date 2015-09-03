@@ -11,7 +11,7 @@ npm install solink-js --save
 var SolinkAPI = require('solink-js'),
     url = 'http://localhost:8800' || 'https://api.solinkcloud.com',
     token = {
-        "auth_token": "thisisthetoken",
+        "authToken": "thisisthetoken",
           "aws": {
             "accessKeyId": "ACCESSKEYID",
             "secretAccessKey": "secret/Acce/ssKey",
