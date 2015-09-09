@@ -22,7 +22,7 @@ var _login = function(credentials) {
 		.then(helper.parseJSON)
 		.then(function(json) {
 			self.token = json
-			self.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId
+			self.tenantId = jwtDecode(json.authToken).app_metadata.tenantId
 			return json
 		})
 }
