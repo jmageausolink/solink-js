@@ -40,9 +40,23 @@ var _setPassword = function (credentials) {
 		.then(helper.parseJSON)
 }
 
+var _forgotPassword = function (credentials) {
+	var url = URL.resolve(authUrl(this.host), 'forgotpassword'),
+		options = { 
+			method: 'POST', 
+			headers: { 'content-type': 'application/json'},
+			body: JSON.stringify(credentials)
+		}
+
+	return fetch(url, options)
+		.then(helper.checkStatus)
+		.then(helper.parseJSON)
+}
+
 module.exports = function(connection) {
 	return {
 		login: _login.bind(connection),
-		setPassword: _setPassword.bind(connection)
+		setPassword: _setPassword.bind(connection),
+		forgotPassword: _forgotPassword.bind(connection)
 	}
 }
