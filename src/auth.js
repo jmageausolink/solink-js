@@ -53,10 +53,24 @@ var _forgotPassword = function (credentials) {
 		.then(helper.parseJSON)
 }
 
+var _refresh = function (credentials) {
+	var url = URL.resolve(authUrl(this.host), 'refresh'),
+		options = { 
+			method: 'POST', 
+			headers: { 'content-type': 'application/json'},
+			body: JSON.stringify(credentials)
+		}
+
+	return fetch(url, options)
+		.then(helper.checkStatus)
+		.then(helper.parseJSON)
+}
+
 module.exports = function(connection) {
 	return {
 		login: _login.bind(connection),
 		setPassword: _setPassword.bind(connection),
-		forgotPassword: _forgotPassword.bind(connection)
+		forgotPassword: _forgotPassword.bind(connection),
+		refresh: _refresh.bind(connection)
 	}
 }
